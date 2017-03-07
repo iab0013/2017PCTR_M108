@@ -23,6 +23,7 @@ public class Billiards extends JFrame {
 	// TODO update with number of group label. See practice statement.
 	private final int N_BALL = 2;
 	private Ball[] balls;
+	private volatile boolean running = false;
 
 	public Billiards() {
 
@@ -72,6 +73,33 @@ public class Billiards extends JFrame {
 			// TODO Code is executed when stop button is pushed
 
 		}
+	}
+
+private class ThreadBall extends Thread{
+		
+//		private Board board;
+		private Ball ball;
+		public ThreadBall(Ball pelota){
+			ball = pelota;
+		}
+
+		
+		@Override
+		public void run() {
+			while(running){
+				try{
+					ball.move();
+					ball.reflect();
+					board.repaint();
+					Thread.sleep(6);
+				}catch(InterruptedException e){
+//					e.printStackTrace();
+					System.err.println("Sleeping Thread Interrupted");
+				}
+			}
+		}
+		
+		
 	}
 
 	public static void main(String[] args) {
