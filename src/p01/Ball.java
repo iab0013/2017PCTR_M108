@@ -31,6 +31,9 @@ public class Ball {
 		x += dx;   
 		y += dy;
 		//TODO Check postcondition
+		
+		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
+		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
 	}
 
 	public void reflect() {
@@ -46,7 +49,10 @@ public class Ball {
 		if (Math.abs(y - Board.TOPBOARD) <  Math.abs(dy)) {
 			fi = - fi;
 		}
-		//TODO Check postcondition	
+		//TODO Check postcondition
+		
+		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
+		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
 	}
 
 	public int getX() {
