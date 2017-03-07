@@ -20,7 +20,7 @@ public class Ball {
 		fi =  Math.random() * Math.PI * 2;
 	}
 
-	public void move() {
+	public synchronized void move() {
 		v = v*Math.exp(-v/1000);
 		dx = v*Math.cos(fi);
 		dy = v*Math.sin(fi);
