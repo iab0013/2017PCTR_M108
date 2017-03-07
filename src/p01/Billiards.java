@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+//import p01.Billiards.ThreadBall;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -24,6 +26,8 @@ public class Billiards extends JFrame {
 	private final int N_BALL = 11;
 	private Ball[] balls = new Ball[N_BALL];
 	private volatile boolean running = false;
+	
+	private ThreadBall[] listadoHilos = new ThreadBall[N_BALL];
 
 	public Billiards() {
 
@@ -66,8 +70,16 @@ public class Billiards extends JFrame {
 	private class StartListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Code is executed when start button is pushed
-
+			// TODO Code is executed when start button is pushed DONE
+			running = true;
+			ThreadBall thread;
+			board.setBalls(balls);
+			
+			for (int i = 0; i < N_BALL; i++) {
+			 	thread = new ThreadBall(balls[i]);
+			 	listadoHilos[i]=thread;
+			 	listadoHilos[i].start();
+			}
 		}
 	}
 
