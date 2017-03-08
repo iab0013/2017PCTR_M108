@@ -2,8 +2,8 @@ package p01;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
-//TODO Transform the code to be used safely in a concurrent context.  
-public class Ball {
+//TODO Transform the code to be used safely in a concurrent context.  LO HACEMOS LUEGO
+public class Ball{
        //TODO  Find an archive named Ball.png 
 	private String Ball = "Ball.png"; 
 
@@ -18,6 +18,9 @@ public class Ball {
 		y = Billiards.Height/2-16;
 		v = 5;
 		fi =  Math.random() * Math.PI * 2;
+		
+		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
+		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
 	}
 
 	public synchronized void move() {
@@ -34,6 +37,7 @@ public class Ball {
 		
 		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
 		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
+		
 	}
 
 	public void reflect() {
@@ -49,7 +53,7 @@ public class Ball {
 		if (Math.abs(y - Board.TOPBOARD) <  Math.abs(dy)) {
 			fi = - fi;
 		}
-		//TODO Check postcondition
+		//TODO Check postcondition	
 		
 		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
 		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;

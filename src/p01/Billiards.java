@@ -4,8 +4,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-//import p01.Billiards.ThreadBall;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -22,12 +20,12 @@ public class Billiards extends JFrame {
 
 	private Board board;
 
-	// TODO update with number of group label. See practice statement. DONE
+	// TODO update with number of group label. See practice statement.
 	private final int N_BALL = 11;
-	private Ball[] balls = new Ball[N_BALL];
-	private volatile boolean running = false;
+	private Ball[] balls = new Ball[N_BALL]; //Vector para acumular objetos pasivos (ball)
+	private volatile boolean running = false; //Variable para hacer que la clase ThreadBall sea thread-safe
 	
-	private ThreadBall[] listadoHilos = new ThreadBall[N_BALL];
+	private ThreadBall[] listadoHilos = new ThreadBall[N_BALL]; //Vector para acumular hilos
 
 	public Billiards() {
 
@@ -54,23 +52,34 @@ public class Billiards extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(Width, Height);
 		setLocationRelativeTo(null);
-		setTitle("Práctica programación concurrente objetos móviles independientes");
+		setTitle("Practica programacion concurrente objetos moviles independientes");
 		setResizable(false);
 		setVisible(true);
 	}
-
+	
+	/**
+	 * Metodo para la creacion de objetos pasivos
+	 * @author Ignacio Aparicio
+	 * @author Ruben Marcos
+	 */
 	private void initBalls() {
-		// TODO init balls DONE
+		// TODO init balls
 		for(int i=0;i<N_BALL;i++){
 			Ball nuevaBola = new Ball();
 			balls[i] = nuevaBola;
 		}
 	}
-
+	
+	/**
+	 * Clase listener para creacion de hilos y ejecuci�n de los mismos.
+	 * @author Ignacio Aparicio
+	 * @author Ruben Marcos
+	 *
+	 */
 	private class StartListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Code is executed when start button is pushed DONE
+			// TODO Code is executed when start button is pushed
 			running = true;
 			ThreadBall thread;
 			board.setBalls(balls);
@@ -82,21 +91,32 @@ public class Billiards extends JFrame {
 			}
 		}
 	}
-
+	
+	/**
+	 *Clase listener para destruccion de hilos
+	 * 
+	 *@author Ignacio Aparicio
+	 *@author Ruben Marcos
+	 */
 	private class StopListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Code is executed when stop button is pushed
+			// TODO Code is executed when stop button is pushed trheadList.get(i).interrupt();
 			running=false;
 			for(int i = 0; i < N_BALL; i++){
 				listadoHilos[i].interrupt();
 			}
 		}
 	}
-
-private class ThreadBall extends Thread{
+	
+	/**
+	 * Clase para creacion de hilos del conotrol de los objetos pasivos (ball)
+	 * 
+	 *@author Ignacio Aparicio
+	 *@autor Ruben Marcos
+	 */
+	private class ThreadBall extends Thread{
 		
-//		private Board board;
 		private Ball ball;
 		public ThreadBall(Ball pelota){
 			ball = pelota;
@@ -105,7 +125,7 @@ private class ThreadBall extends Thread{
 		
 		@Override
 		public void run() {
-			while(running){
+			while(running){	//uso de variable volatile boolean en vez de directamente while(true) para asegurar que la clase sea thread-safes
 				try{
 					ball.move();
 					ball.reflect();
