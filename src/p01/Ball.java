@@ -19,12 +19,11 @@ public class Ball{
 		v = 5;
 		fi =  Math.random() * Math.PI * 2;
 		
-		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
-		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
+		cumplimientoInvariante();
 	}
 
 	public synchronized void move() {
-		v = v*Math.exp(-v/1000);
+//		v = v*Math.exp(-v/1000);
 		dx = v*Math.cos(fi);
 		dy = v*Math.sin(fi);
 		if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
@@ -35,8 +34,7 @@ public class Ball{
 		y += dy;
 		//TODO Check postcondition
 		
-		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
-		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
+		cumplimientoInvariante();
 		
 	}
 
@@ -55,8 +53,7 @@ public class Ball{
 		}
 		//TODO Check postcondition	
 		
-		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD;
-		assert y>Board.LEFTBOARD && y<Board.RIGHTBOARD;
+		cumplimientoInvariante();
 	}
 
 	public int getX() {
@@ -85,6 +82,11 @@ public class Ball{
 
 	public Image getImage() {
 		return image;
+	}
+	
+	
+	private void cumplimientoInvariante(){
+		assert x>Board.TOPBOARD && x<Board.BOTTOMBOARD && y>Board.LEFTBOARD && y<Board.RIGHTBOARD:"La bola se ha salido del tablero";
 	}
 
 }
